@@ -90,6 +90,15 @@ const Header = () => {
                 [Get Wheather]
               </Link>
             </li>
+            <li>
+              <Link
+                to="/FetchIp"
+                className="block font-bold py-2 text-gray-600 hover:text-gray-900"
+                onClick={() => setMenuOpen(false)}
+              >
+                IP
+              </Link>
+            </li>
 
             {/* Auth buttons for mobile */}
             {!isLoggedIn && (

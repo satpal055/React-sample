@@ -19,7 +19,7 @@ import RegisterUser from "../RegisterUser.js";
 import Calculator from "../Calculator.js";
 import Table from "../Table.js";
 import Wheather from "../Wheather.js";
-
+import FetchIp from "../FetchIP.js"
 const AppRoutes = () => {
 
   return (
@@ -30,6 +30,7 @@ const AppRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/RegisterUser" element={<RegisterUser />} />
         <Route path="/Wheather" element={<Wheather />} />
+         <Route path="/FetchIp" element={<FetchIp />} />
         {/* Protected routes */}
         <Route element={<ProtectRoutes />}>
           <Route path="/" element={<Cars />} />
