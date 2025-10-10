@@ -81,6 +81,15 @@ const Header = () => {
                 Contact
               </Link>
             </li>
+            <li>
+              <Link
+                to="/Wheather"
+                className="block font-bold py-2 text-gray-600 hover:text-gray-900"
+                onClick={() => setMenuOpen(false)}
+              >
+                [Get Wheather]
+              </Link>
+            </li>
 
             {/* Auth buttons for mobile */}
             {!isLoggedIn && (

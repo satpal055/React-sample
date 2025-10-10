@@ -18,6 +18,7 @@ import UserDetails from "../UserDetails.js";
 import RegisterUser from "../RegisterUser.js";
 import Calculator from "../Calculator.js";
 import Table from "../Table.js";
+import Wheather from "../Wheather.js";
 
 const AppRoutes = () => {
 
@@ -28,6 +29,7 @@ const AppRoutes = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/RegisterUser" element={<RegisterUser />} />
+        <Route path="/Wheather" element={<Wheather />} />
         {/* Protected routes */}
         <Route element={<ProtectRoutes />}>
           <Route path="/" element={<Cars />} />
