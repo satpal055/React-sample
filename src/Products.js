@@ -10,7 +10,7 @@ export default function Products() {
   const [skip,setSkip] = useState(0)
   const [total, setTotal] = useState(0);  
   const [loading, setLoading] = useState(false)
-
+// 12345
   useEffect(() => {
     const myFunction = async () => {
 
