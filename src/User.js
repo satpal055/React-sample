@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';  // changes the route programmatically.
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 export default function User() {
   const [formData, setFormdata] = useState({
@@ -31,7 +33,26 @@ export default function User() {
       localStorage.setItem("users", JSON.stringify(tableData));
     }
   }, [tableData]);
+const exportToExcel = () => {
+  if (tableData.length === 0) {
+    alert("No data to export!");
+    return;
+  }
 
+  // 1️⃣ Create worksheet from table data
+  const worksheet = XLSX.utils.json_to_sheet(tableData);
+
+  // 2️⃣ Create a new workbook and append worksheet
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
+
+  // 3️⃣ Generate Excel buffer
+  const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+
+  // 4️⃣ Save the file
+  const data = new Blob([excelBuffer], { type: "application/octet-stream" });
+  saveAs(data, "UserData.xlsx");
+};
 
   const handlChange = (e) => {
     setFormdata({ ...formData, [e.target.name]: e.target.value })
@@ -184,6 +205,12 @@ export default function User() {
               >
                 Add User
               </button>
+              <button
+                type="submit"
+                 onClick={exportToExcel} className="rounded-md bg-orange-700 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-orange-Z00 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+               Export
+              </button>
             </div>
           </div>
         </div>
@@ -200,6 +227,8 @@ export default function User() {
           </tr>
         </thead>
         <tbody>
+
+          
           {tableData.map((user, index) => (
             <tr key={index}>
               <td className="border px-4 py-2">{user.firstName}</td>

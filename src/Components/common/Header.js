@@ -96,7 +96,7 @@ const Header = () => {
                 className="block font-bold py-2 text-gray-600 hover:text-gray-900"
                 onClick={() => setMenuOpen(false)}
               >
-                IP
+                Blog
               </Link>
             </li>
 

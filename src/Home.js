@@ -9,7 +9,7 @@ export default function Home() {
         
            <h2 className='text-2xl text-center font-bold text-white'>Welcome! Our Homepage is On Working Mode</h2>
         </div>
-
+  
     </>
   )
 }

@@ -5,7 +5,7 @@ export default function FetchIP() {
     const [posts,setPost] = useState([])
     // const inpRef = useRef()
 
-const resultIp = async()=>{
+const resultPost= async()=>{
     try {
         const apiURL='https://jsonplaceholder.typicode.com/posts'
         const response = await fetch(apiURL);
@@ -20,7 +20,7 @@ const resultIp = async()=>{
 }
 
 useEffect(()=>{
-    resultIp()
+    resultPost()
 },[])
 
   return (

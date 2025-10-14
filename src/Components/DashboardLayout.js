@@ -64,6 +64,16 @@ const DashboardLayout = () => {
                        
                     </div>
                 </div>
+                <div className="px-4 py-2 bg-primary-700">
+                    <div className="flex items-center space-x-2">
+                        <Link to="./SendData" className="block px-4 py-2 ">
+                         <i className="fas fa-shopping-cart pe-2"></i>
+                            SendData
+                        </Link>
+                       
+                       
+                    </div>
+                </div>
           
          
         </div>

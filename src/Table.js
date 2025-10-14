@@ -2,17 +2,76 @@ import React, { useEffect, useState } from "react";
 import { EmployeeData } from "./EmployeeData";
 
 export default function Table() {
-  const [data, setData] = useState([]);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [age, setAge] = useState("");
-  const [id, setId] = useState(null);
-  const [isUpdate, setIsUpdate] = useState(false);
+  const [data, setData] = useState([]); // Holds all employee records
+  const [firstName, setFirstName] = useState(""); // First name input
+  const [lastName, setLastName] = useState(""); // Last name input
+  const [age, setAge] = useState(""); // Age input
+  const [id, setId] = useState(null);   // Current editing record ID
+  const [isUpdate, setIsUpdate] = useState(false); // True if editing a record
+  const [sortConfig, setSortConfig] = useState({key:null,direction:"asc"})  // Sorting info
+  const [columns,setColumns] = useState(["id","firstName","lastName","age"]);
+  const [draggedCol,setDraggedCol] = useState(null) ;
+  const [draggedRowIndex, setDraggedRowIndex] = useState(null);
+
+
 
   // Load initial data
   useEffect(() => {
     setData(EmployeeData);
   }, []);
+
+const handleDragStart = (col)=>{
+  setDraggedCol(col)
+}
+
+const handleDrop =(targetCol)=>{
+  const newCols = [...columns];
+  const fromIndex = newCols.indexOf(draggedCol);
+  const toIndex = newCols.indexOf(targetCol);
+
+  newCols.splice(fromIndex,1);
+  newCols.splice(toIndex,0,draggedCol)
+
+  setColumns(newCols);
+  setDraggedCol(null)
+}
+const handleRowDragStart = (index) => {
+  setDraggedRowIndex(index);
+};
+
+const handleRowDrop = (index) => {
+  if (draggedRowIndex === null) return;
+
+  const newData = [...data];
+  const draggedItem = newData[draggedRowIndex];
+  
+ 
+  newData.splice(draggedRowIndex, 1);
+ 
+  newData.splice(index, 0, draggedItem);
+
+  setData(newData);
+  setDraggedRowIndex(null);
+};
+
+const handleSort = (key)=>{
+  let direction = "asc";
+
+  if(sortConfig.key === key && sortConfig.direction === "asc"){
+    direction = "desc"
+  }
+
+  const sortedData = [...data].sort((a,b)=>{
+    if(a[key] < b[key]) return direction === "asc" ? -1 : 1;
+    if(a[key] > b[key]) return direction === "asc" ? 1 : -1;
+
+    return 0;
+ 
+  });
+
+    setData(sortedData);
+    setSortConfig({key,direction})
+}
 
   // ✅ Handle Edit
   const editData = (id) => {
@@ -32,6 +91,7 @@ export default function Table() {
       const updatedData = data.filter((item) => item.id !== id);
       setData(updatedData);
     }
+    
   };
 
   // ✅ Clear form inputs
@@ -134,7 +194,7 @@ export default function Table() {
             onClick={handleClear}
             className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-1 rounded-md transition m-1"
           >
-            Clear
+            Clear  
           </button>
         </div>
       </div>
@@ -142,22 +202,41 @@ export default function Table() {
       <div className="mt-6 overflow-x-auto">
         <table className="w-full border border-gray-300 text-center shadow-lg rounded-lg">
           <thead className="bg-gray-100">
+          
+
             <tr>
-              <th className="p-3 border">ID</th>
-              <th className="p-3 border">First Name</th>
-              <th className="p-3 border">Last Name</th>
-              <th className="p-3 border">Age</th>
-              <th className="p-3 border">Actions</th>
+              {columns.map((col)=>(
+                <th className="p-3 border" key={col} draggable onDragStart={()=>handleDragStart(col)} onDragOver={(e)=>e.preventDefault()} onDrop={()=>handleDrop(col)} onClick={() => handleSort(col)} style={{cursor: "move",backgroundColor: draggedCol === col ? "#d3f9d8" : "#f3f3f3",padding: "8px", }}>{col}{" "}{sortConfig.key === col ? sortConfig.direction === "asc" ? "▲" : "▼" : ""}</th>
+              ))}
+              
+              {/* <th className="p-3 border" onClick={()=>handleSort("firstName")}>First Name{" "}{sortConfig.key === "firstName" ? sortConfig.direction === "asc" ? "▲" : "▼" : ""}</th>
+              <th className="p-3 border" onClick={()=>handleSort("lastName")}>Last Name{" "} {sortConfig.key==="lastName" ? sortConfig.direction ===  "asc" ? "▲" : "▼" :""}</th>
+              <th className="p-3 border" onClick={()=>handleSort("age")}>Age{" "} {sortConfig.key === "age" ? sortConfig.direction === "asc" ? "▲" : "▼" : ""}</th>
+              <th className="p-3 border">Actions</th> */}
             </tr>
           </thead>
           <tbody>
             {data.length > 0 ? (
               data.map((item, index) => (
-                <tr key={index} className="hover:bg-gray-50">
-                  <td className="p-2 border">{item.id}</td>
-                  <td className="p-2 border">{item.firstName}</td>
+                <tr key={item.id} className="hover:bg-gray-50 " draggable={true}  
+  onDragStart={() => handleRowDragStart(index)}
+  onDragOver={(e) => e.preventDefault()}
+  onDrop={() => handleRowDrop(index)}
+  style={{
+    backgroundColor: draggedRowIndex === index ? "#f0f8ff" : "transparent",
+    cursor: "move",
+  }}>
+
+
+
+
+                  {columns.map((col)=>(
+                      <td className="p-2 border" key={col}>{item[col]}</td>
+                  ))}
+                  
+                  {/* <td className="p-2 border">{item.firstName}</td>
                   <td className="p-2 border">{item.lastName}</td>
-                  <td className="p-2 border">{item.age}</td>
+                  <td className="p-2 border">{item.age}</td> */}
                   <td className="p-2 border">
                     <button
                       onClick={() => editData(item.id)}
@@ -184,7 +263,7 @@ export default function Table() {
           </tbody>
         </table>
 
-     
+
       </div>
     </div>
   );

@@ -19,7 +19,10 @@ import RegisterUser from "../RegisterUser.js";
 import Calculator from "../Calculator.js";
 import Table from "../Table.js";
 import Wheather from "../Wheather.js";
-import FetchIp from "../FetchIP.js"
+import FetchIp from "../FetchIP.js";
+import SendData from "../SendData.js";
+
+
 const AppRoutes = () => {
 
   return (
@@ -47,6 +50,7 @@ const AppRoutes = () => {
             <Route path="products" element={<Products />} />
             <Route path="Calculator" element={<Calculator />} />
             <Route path="Table" element={<Table />} />
+            <Route path="SendData" element={<SendData />}/>
           </Route>
         </Route>
       </Routes>
