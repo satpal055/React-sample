@@ -13,11 +13,9 @@ const DashboardLayout = () => {
     <div className="flex h-screen">
       {/* Sidebar */}
       <div className="w-64 bg-blue-900 text-white  h-full">
-        <div className="p-4 flex items-center space-x-2">
-          <h1 className="text-xl font-bold">MyDashboard</h1>
-        </div>
+     
 
-        <div className="mt-6">
+        <div className="">
             <div className="px-4 py-2 bg-primary-700">
                 <div className="flex items-center space-x-2">
                         <Link to="/dashboard" className="block px-4 py-2  ">
@@ -47,7 +45,7 @@ const DashboardLayout = () => {
            <div className="px-4 py-2 bg-primary-700">
                     <div className="flex items-center space-x-2">
                         <Link to="./Calculator" className="block px-4 py-2 ">
-                         <i className="fas fa-shopping-cart pe-2"></i>
+                         <i class="fa-solid fa-calculator pe-2"></i>
                             Calculator
                         </Link>
                        
@@ -57,18 +55,8 @@ const DashboardLayout = () => {
                 <div className="px-4 py-2 bg-primary-700">
                     <div className="flex items-center space-x-2">
                         <Link to="./Table" className="block px-4 py-2 ">
-                         <i className="fas fa-shopping-cart pe-2"></i>
+                        <i class="fa-solid fa-table pe-2"></i>
                             Table
-                        </Link>
-                       
-                       
-                    </div>
-                </div>
-                <div className="px-4 py-2 bg-primary-700">
-                    <div className="flex items-center space-x-2">
-                        <Link to="./SendData" className="block px-4 py-2 ">
-                         <i className="fas fa-shopping-cart pe-2"></i>
-                            SendData
                         </Link>
                        
                        
@@ -95,7 +83,7 @@ const DashboardLayout = () => {
       </div>
 
       {/* Main content */}
-      <div className="flex-1   p-6 bg-gray-100 overflow-y-auto">
+      <div className="flex-1  p-6 bg-gray-100 overflow-y-auto">
         <Outlet /> {/* This is where nested pages render */}
       </div>
     </div>

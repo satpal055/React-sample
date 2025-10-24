@@ -19,7 +19,7 @@ import RegisterUser from "../RegisterUser.js";
 import Calculator from "../Calculator.js";
 import Table from "../Table.js";
 import Wheather from "../Wheather.js";
-import FetchIp from "../FetchIP.js";
+// import FetchIp from "../FetchIP.js";
 import SendData from "../SendData.js";
 
 
@@ -30,31 +30,28 @@ const AppRoutes = () => {
       <Header />
 
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/RegisterUser" element={<RegisterUser />} />
-        <Route path="/Wheather" element={<Wheather />} />
-         <Route path="/FetchIp" element={<FetchIp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/RegisterUser" element={<RegisterUser />} />
+          <Route path="/Wheather" element={<Wheather />} />
+        
         {/* Protected routes */}
         <Route element={<ProtectRoutes />}>
           <Route path="/" element={<Cars />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/service" element={<Service />} />
           <Route path="/about" element={<About />} />
-          
-          <Route path="/Users/:id" element={<UserDetails />} />
-           
-
+          <Route path="/Users/:id" element={<UserDetails />} />          
           <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route index element={<DashboardHome />} />
-            <Route path="user" element={<User />} />
-            <Route path="products" element={<Products />} />
-            <Route path="Calculator" element={<Calculator />} />
-            <Route path="Table" element={<Table />} />
-            <Route path="SendData" element={<SendData />}/>
+          <Route index element={<DashboardHome />} />
+          <Route path="user" element={<User />} />
+          <Route path="products" element={<Products />} />
+          <Route path="Calculator" element={<Calculator />} />
+          <Route path="Table" element={<Table />} />
+          <Route path="SendData" element={<SendData />}/>
           </Route>
         </Route>
       </Routes>
-
+      
       <Footer />
     </div>
   );

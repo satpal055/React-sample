@@ -13,7 +13,7 @@ const Header = () => {
   }, [location]);
 
   const logOuts = () => {
-   localStorage.clear();
+    localStorage.clear();
     setIsLoggedIn(false);
     navigate("/login");
   };
@@ -22,7 +22,14 @@ const Header = () => {
     <header className="bg-white shadow-md">
       <div className="container mx-auto flex justify-between items-center p-4">
         {/* Logo */}
-        <div className="text-2xl font-bold text-indigo-800">MyLogo</div>
+           <Link
+                to="/dashboard"
+                className="block py-2 text-2xl font-bold text-indigo-800"
+                
+              >
+                MyDashboard
+              </Link>
+        
 
         {/* Hamburger button for mobile */}
         <div className="md:hidden">
@@ -40,9 +47,8 @@ const Header = () => {
 
         {/* Navigation Links */}
         <nav
-          className={`${
-            menuOpen ? "block" : "hidden"
-          } absolute top-16 left-0 w-full bg-white shadow-md md:static md:block md:w-auto md:shadow-none`}
+          className={`${menuOpen ? "block" : "hidden"
+            } absolute top-16 left-0 w-full bg-white shadow-md md:static md:block md:w-auto md:shadow-none`}
         >
           <ul className="flex flex-col md:flex-row md:space-x-6 p-4 md:p-0">
             <li>
@@ -90,15 +96,7 @@ const Header = () => {
                 [Get Wheather]
               </Link>
             </li>
-            <li>
-              <Link
-                to="/FetchIp"
-                className="block font-bold py-2 text-gray-600 hover:text-gray-900"
-                onClick={() => setMenuOpen(false)}
-              >
-                Blog
-              </Link>
-            </li>
+ 
 
             {/* Auth buttons for mobile */}
             {!isLoggedIn && (

@@ -146,7 +146,7 @@ const handleSort = (key)=>{
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               placeholder="Enter First Name"
-              className="border border-gray-300 rounded-md px-3 py-2 ms-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border bg-white  border-gray-300 rounded-md px-3 py-2 ms-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </label>
 
@@ -157,7 +157,7 @@ const handleSort = (key)=>{
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               placeholder="Enter Last Name"
-              className="border border-gray-300 rounded-md px-3 py-2 ms-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border bg-white  border-gray-300 rounded-md px-3 py-2 ms-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </label>
 
@@ -168,7 +168,7 @@ const handleSort = (key)=>{
               value={age}
               onChange={(e) => setAge(e.target.value)}
               placeholder="Enter Age"
-              className="border border-gray-300 rounded-md px-3 py-2 ms-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border bg-white  border-gray-300 rounded-md px-3 py-2 ms-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </label>
         </div>
