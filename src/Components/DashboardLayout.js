@@ -45,7 +45,7 @@ const DashboardLayout = () => {
            <div className="px-4 py-2 bg-primary-700">
                     <div className="flex items-center space-x-2">
                         <Link to="./Calculator" className="block px-4 py-2 ">
-                         <i class="fa-solid fa-calculator pe-2"></i>
+                         <i className="fa-solid fa-calculator pe-2"></i>
                             Calculator
                         </Link>
                        
@@ -55,7 +55,7 @@ const DashboardLayout = () => {
                 <div className="px-4 py-2 bg-primary-700">
                     <div className="flex items-center space-x-2">
                         <Link to="./Table" className="block px-4 py-2 ">
-                        <i class="fa-solid fa-table pe-2"></i>
+                        <i className="fa-solid fa-table pe-2"></i>
                             Table
                         </Link>
                        
