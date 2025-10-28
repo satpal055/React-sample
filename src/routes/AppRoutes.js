@@ -21,12 +21,15 @@ import Table from "../Table.js";
 import Wheather from "../Wheather.js";
 // import FetchIp from "../FetchIP.js";
 import SendData from "../SendData.js";
+import InternetStatus from "../Components/InternetStatus.js";
+import Todolist from "../Todolist.js"
 
 
 const AppRoutes = () => {
 
   return (
     <div>
+      <InternetStatus/>
       <Header />
 
       <Routes>
@@ -36,6 +39,7 @@ const AppRoutes = () => {
         
         {/* Protected routes */}
         <Route element={<ProtectRoutes />}>
+        <Route path="Todolist" element={<Todolist />}/>
           <Route path="/" element={<Cars />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/service" element={<Service />} />
@@ -48,6 +52,7 @@ const AppRoutes = () => {
           <Route path="Calculator" element={<Calculator />} />
           <Route path="Table" element={<Table />} />
           <Route path="SendData" element={<SendData />}/>
+          
           </Route>
         </Route>
       </Routes>

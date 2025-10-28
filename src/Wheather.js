@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
+import {BarChart,Bar,XAxis,YAxis,Tooltip,ResponsiveContainer,CartesianGrid} from "recharts";
 
 export default function Wheather() {
 
-    const [weatherData, setWheatherData] = useState(false)
+    const [weatherData, setWheatherData] = useState(false);
+    const [chartData,setChartData] = useState([])
     const inpRef = useRef()
 
     const search = async (city) => {
@@ -18,8 +20,21 @@ export default function Wheather() {
                 wind: data.wind.speed,
                 temperature: Math.floor(data.main.temp),
                 location: data.name,
+                feels_like:data.main.feels_like,
+                temp_min:data.main.temp_min,
+                temp_max:data.main.temp_max,
+                pressure:data.main.pressure,
+
                 // icon:
-            })
+            });
+            setChartData([
+                {name:"Temp", value:data.main.temp},
+                {name:"Feels Like",value:data.main.feels_like},
+                {name:"Min Temp" , value:data.main.temp_min},
+                {name:"Max Temp" , value:data.main.temp_min},
+                {name:"Humidity" , value:data.main.humidity},
+                {name:"Pressure ", value:data.main.pressure }
+            ])
         } catch (error) {
             console.error(error)
         }
@@ -57,6 +72,22 @@ export default function Wheather() {
 
                         </div>
                     </div>
+
+                     {/*   graph chartData */  }
+
+                    <div className='bg-white rounded-lg shadow mt-6 p-4 text-black'>
+                        <h3 className=''>Weather Details</h3>
+                        <ResponsiveContainer width="100%" height={250}>
+                            <BarChart data={chartData}>
+                                <CartesianGrid  strokeDasharray="3 3"/>
+                                <XAxis dataKey="name"/>
+                                <YAxis/>
+                                <Tooltip/>
+                                <Bar dataKey="value" fill="#6366F1" radius={[5, 5, 0, 0]}/>
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+
                 </div>
             </div>
 

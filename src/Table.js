@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { EmployeeData } from "./EmployeeData";
+import emailjs from "emailjs-com";
+ 
+
 
 export default function Table() {
   const [data, setData] = useState([]); // Holds all employee records
@@ -12,6 +15,7 @@ export default function Table() {
   const [columns,setColumns] = useState(["id","firstName","lastName","age"]);
   const [draggedCol,setDraggedCol] = useState(null) ;
   const [draggedRowIndex, setDraggedRowIndex] = useState(null);
+
 
 
 
@@ -111,6 +115,14 @@ const handleSort = (key)=>{
       return;
     }
 
+    const  templateParams  = {
+      firstName,
+       title:"fullstack",
+       companyName: "Techbirja", // 👈 your IT company name
+       email: "satpal055singh@gmail.com", // 👈 your company email (or leave empty)
+      action:isUpdate ? "Updated":"Added",
+    }
+
     if (isUpdate) {
       // Update existing
       const index = data.findIndex((item) => item.id === id);
@@ -119,6 +131,18 @@ const handleSort = (key)=>{
         updatedData[index] = { id, firstName, lastName, age };
         setData(updatedData);
         alert("✅ Record updated successfully!");
+        emailjs.send(
+          "service_ia6ajje", // 🔹 Replace with EmailJS Service ID
+          "template_rnmy8ii", // 🔹 Replace with EmailJS Template ID
+          templateParams,
+          "BL2ARsfcIKwwBpoUR"   // 🔹 Replace with EmailJS Public Key
+        )
+        .then(() => {
+          console.log("📧 Update email sent!");
+        })
+        .catch((err) => {
+          console.error("❌ Email failed:", err);
+        });
       }
     } else {
       // Add new
@@ -126,6 +150,19 @@ const handleSort = (key)=>{
       const newRecord = { id: newId, firstName, lastName, age };
       setData([...data, newRecord]);
       alert("✅ Record added successfully!");
+       emailjs
+      .send(
+        "service_ia6ajje", // 🔹 Replace with EmailJS Service ID
+        "template_rnmy8ii", // 🔹 Replace with EmailJS Template ID
+        templateParams,
+        "BL2ARsfcIKwwBpoUR"   // 🔹 Replace with EmailJS Public Key
+      )
+      .then(() => {
+        console.log("📧 New record email sent!");
+      })
+      .catch((err) => {
+        console.error("❌ Email failed:", err);
+      });
     }
 
     handleClear();

@@ -87,6 +87,15 @@ const Header = () => {
                 Contact
               </Link>
             </li>
+             <li>
+              <Link
+                to="/Todolist"
+                className="block py-2 text-gray-600 hover:text-gray-900"
+                onClick={() => setMenuOpen(false)}
+              >
+                TodoList
+              </Link>
+            </li>
             <li>
               <Link
                 to="/Wheather"

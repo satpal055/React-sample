@@ -8,11 +8,19 @@ export default function Login() {
   const passRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+ 
+  // const logoutUser = () => {
+  //   localStorage.clear();
+  //   toast.info("Session expired. Please login again!");
+  //   navigate("/login");
+  // };
+
 
   const submit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
+  
     const mail = emailRef.current.value;
     const pass = passRef.current.value;
 
@@ -56,9 +64,12 @@ export default function Login() {
         localStorage.setItem("image", response.data.data.image);
         localStorage.setItem("role", response.data.data.role);
 
-        startAutoLogout()
+        //  setTimeout(() => {
+        //   logoutUser();
+        // }, 2 * 60 * 1000); // 2 minutes
 
         // Redirect to dashboard or whatever page
+        
         navigate("/dashboard");
 
     
@@ -76,15 +87,7 @@ export default function Login() {
 
   };
 
-  const startAutoLogout=()=>{
-    clearTimeout(window.logoutTimer);
-
-    window.logoutTimer = setTimeout(()=>{
-      localStorage.removeItem("token");
-      toast.info("session expired ! login again");
-      navigate("/login")
-    },2 * 60 * 1000)
-  }
+ 
 
   useEffect(() => {
     // Clear localStorage whenever user visits the login page

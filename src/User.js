@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';  // changes the route programmatically.
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
- 
+
 
 export default function User() {
   const [formData, setFormdata] = useState({
@@ -12,6 +12,17 @@ export default function User() {
     email: '',
     country: '',
   })
+
+  const [columns, setColumns] = useState({
+    firstName: true,
+    lastName: true,
+    email: true,
+    country: true,
+  });
+
+  const toggleColumn = (col) => {
+    setColumns({ ...columns, [col]: !columns[col] });
+  };
 
   const [tableData, setTabledata] = useState([]);
 
@@ -32,7 +43,7 @@ export default function User() {
       localStorage.setItem("users", JSON.stringify(tableData));
     }
   }, [tableData]);
- 
+
 
   const handlChange = (e) => {
     setFormdata({ ...formData, [e.target.name]: e.target.value })
@@ -57,23 +68,22 @@ export default function User() {
     }
     else {
       setTabledata([...tableData, formData]);
-      toast.success("New User Added") 
+      toast.success("New User Added")
     }
 
-  try {
-    await  fetch(
-      "https://script.google.com/macros/s/AKfycbyvSQR0m14rR4fU_NpjCovUoDz91SX6UqgqDkDDrseGr1J-EH4FArXJPbn8UxpksVMq/exec", {
+    try {
+      await fetch("https://script.google.com/macros/s/AKfycbxiUnkSzxnvfkieieS-0LOUNL-aoCNnAwPwT_s0h-3EcViWalrX-aZQz1beaJ6TWxCX/exec", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "no-cors",
+        mode: "no-cors", // required for Apps Script
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-    
-  } catch (error) {
-    console.error('error')
-  }
+
+
+
+    } catch (error) {
+      console.error('error')
+    }
 
     setFormdata({ firstName: "", lastName: "", email: "", country: "" })
 
@@ -202,9 +212,9 @@ export default function User() {
               </button>
               <button
                 type="submit"
-                  className="rounded-md bg-orange-700 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-orange-Z00 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="rounded-md bg-orange-700 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-orange-Z00 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-               Export
+                Export
               </button>
             </div>
           </div>
@@ -214,30 +224,39 @@ export default function User() {
       <table className="table-auto mt-5 w-full">
         <thead className='text-left'>
           <tr>
-            <th className="px-4 py-2">First Name</th>
-            <th className="px-4 py-2">Last Name</th>
-            <th className="px-4 py-2">Email Adress</th>
-            <th className="px-4 py-2">Country</th>
-
+            {columns.firstName && <th className="px-4 py-2">First Name</th>}
+            {columns.lastName && <th className="px-4 py-2">Last Name</th>}
+            {columns.email && <th className="px-4 py-2">Email Address</th>}
+            {columns.country && <th className="px-4 py-2">Country</th>}
+            <th className="px-4 py-2">
+              <select
+                onChange={(e) => toggleColumn(e.target.value)}
+                className="w-full border border-gray-300 rounded-md px-2 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Hide/Show</option>
+                <option value="firstName">First Name</option>
+                <option value="lastName">Last Name</option>
+                <option value="email">Email</option>
+                <option value="country">Country</option>
+              </select>
+            </th>
           </tr>
         </thead>
-        <tbody>
 
-          
+        <tbody>
           {tableData.map((user, index) => (
             <tr key={index}>
-              <td className="border px-4 py-2">{user.firstName}</td>
-              <td className="border px-4 py-2">{user.lastName}</td>
-              <td className="border px-4 py-2">{user.email}</td>
-              <td className="border px-4 py-2">{user.country}</td>
-              <td className="  ps-3 py-2"><button onClick={() => goToDetails(user)}><i class="fa-solid fa-eye"></i></button></td>
-              <td className="  ps-3 py-2"><button onClick={() => editUser(index)}><i class="fa-solid fa-pen"></i></button></td>
-              <td className="  ps-3 py-2"><button onClick={() => deleteUser(index)}><i class="fa-solid fa-trash"></i></button></td>
+              {columns.firstName && <td className="border px-4 py-2">{user.firstName}</td>}
+              {columns.lastName && <td className="border px-4 py-2">{user.lastName}</td>}
+              {columns.email && <td className="border px-4 py-2">{user.email}</td>}
+              {columns.country && <td className="border px-4 py-2">{user.country}</td>}
+              <td className="ps-3 py-2"><button onClick={() => goToDetails(user)}><i className="fa-solid fa-eye"></i></button></td>
+              <td className="ps-3 py-2"><button onClick={() => editUser(index)}><i className="fa-solid fa-pen"></i></button></td>
+              <td className="ps-3 py-2"><button onClick={() => deleteUser(index)}><i className="fa-solid fa-trash"></i></button></td>
             </tr>
           ))}
-
-
         </tbody>
+
       </table>
     </div>
   )
